@@ -54,5 +54,6 @@ public class DataInserter implements CommandLineRunner {
             logger.error(ignored.getStackTrace());
             throw new Exception();
         }
+
     }
 }
