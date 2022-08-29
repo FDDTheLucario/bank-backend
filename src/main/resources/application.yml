@@ -1,0 +1,10 @@
+server:
+  port: 5000
+  servlet:
+    context-path: /bank
+
+spring:
+  application:
+    name: bank
+  profiles:
+    default: local

@@ -6,3 +6,14 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=bank
     username: postgres
     password: revature
+jpa:
+  database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+  show-sql: false
+  hibernate:
+    ddl-auto: create-drop
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # do not enable all Actuator endpoints when deploying to prod (customer-facing)
