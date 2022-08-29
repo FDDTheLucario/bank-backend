@@ -10,6 +10,8 @@ public class Account {
     @Id
     @Column(name = "account_id", unique = true, nullable = false)
     private String accountId;
+    @Column(name = "account_number", unique = true, nullable = false)
+    private long accountNumber;
     @ManyToOne
     @JoinColumn(name = "account_type_id")
     private AccountType type;
@@ -24,6 +26,14 @@ public class Account {
     private double availableBalance;
     @OneToMany(mappedBy = "account")
     private List<Transaction> transactions;
+
+    public long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(long accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
     public String getAccountId() {
         return accountId;
