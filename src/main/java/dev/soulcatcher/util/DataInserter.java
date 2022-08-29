@@ -42,13 +42,17 @@ public class DataInserter implements CommandLineRunner {
             return;
         }
         logger.info("Running inserter...");
-        String[] accountTypes = {"Checking, Savings"};
+        String[] accountTypes = {"Checking", "Savings"};
         List<AccountType> types = new ArrayList<>();
-        for (String s : accountTypes) {
-            logger.info(String.format("Adding account type %s to account types", s));
-            types.add(new AccountType(s.toUpperCase()));
-            logger.info("Added successfully");
+
+        try {
+            for (String s : accountTypes) {
+                types.add(new AccountType(s.toUpperCase()));
+            }
+            acctTypeRepo.saveAll(types);
+        } catch (Exception ignored) {
+            logger.error(ignored.getStackTrace());
+            throw new Exception();
         }
-        acctTypeRepo.saveAll(types);
     }
 }

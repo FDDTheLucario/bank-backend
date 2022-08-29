@@ -14,6 +14,7 @@ public class Account {
     @JoinColumn(name = "account_type_id")
     private AccountType type;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
     @Column(nullable = true)
     private String nickname;

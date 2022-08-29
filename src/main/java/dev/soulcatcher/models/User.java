@@ -7,7 +7,6 @@ import java.util.List;
 @Table(name = "`users`")
 public class User {
     @Id
-    @Column(name = "user_id", nullable = false, unique = true)
     private String userId;
     @Column(nullable = false, unique = true)
     private String email;
