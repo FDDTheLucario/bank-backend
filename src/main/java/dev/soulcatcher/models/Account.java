@@ -89,15 +89,5 @@ public class Account {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
-    public void addTransaction(Transaction... transaction) {
-        transactions.addAll(Arrays.asList(transaction));
-    }
-    public void addTransaction(double amount, String merchant) {
-        Transaction transaction = new Transaction();
-        transaction.setAccount(this);
-        transaction.setTransactionId(UUID.randomUUID().toString());
-        transaction.setAmount(amount);
-        transaction.setMerchant(merchant);
-        transactions.add(transaction);
-    }
+
 }

@@ -35,10 +35,13 @@ public class AccountService {
         account.setNickname(request.getNickname());
         account.setAccountNumber(generateAccountNumber());
         account.setTransactions(new ArrayList<>());
-        account.setCurrentBalance(500);
-        account.setAvailableBalance(500);
+        account.setCurrentBalance(0);
+        account.setAvailableBalance(0);
         account.setUser(request.getUser());
         accountRepo.save(account);
         logger.info(String.format("Created new bank account %d for %s.", account.getAccountNumber(), account.getUser().getUsername()));
+    }
+    public void updateAccount(Account account) {
+
     }
 }
