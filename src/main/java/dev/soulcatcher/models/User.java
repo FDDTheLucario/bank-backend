@@ -1,8 +1,12 @@
 package dev.soulcatcher.models;
 
+import dev.soulcatcher.dtos.RegisterRequest;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "`users`")
@@ -20,6 +24,18 @@ public class User {
     private String firstName;
     @Column(name = "last_name", unique = false)
     private String lastName;
+
+    public User() {
+        super();
+    }
+
+    public User(RegisterRequest registerRequest) {
+        this.userId = UUID.randomUUID().toString();
+        this.email = registerRequest.getEmail();
+        this.username = registerRequest.getUsername();
+        this.firstName = registerRequest.getFirstName();
+        this.lastName = registerRequest.getLastName();
+    }
 
     public String getUserId() {
         return userId;

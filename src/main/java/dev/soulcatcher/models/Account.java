@@ -1,8 +1,12 @@
 package dev.soulcatcher.models;
 
+import dev.soulcatcher.dtos.NewAccountRequest;
+
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "accounts")
@@ -12,9 +16,6 @@ public class Account {
     private String accountId;
     @Column(name = "account_number", unique = true, nullable = false)
     private long accountNumber;
-    @ManyToOne
-    @JoinColumn(name = "account_type_id")
-    private AccountType type;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -26,6 +27,12 @@ public class Account {
     private double availableBalance;
     @OneToMany(mappedBy = "account")
     private List<Transaction> transactions;
+
+    public Account(NewAccountRequest accountRequest) {
+        this.user = accountRequest.getUser();
+        this.nickname = accountRequest.getNickname();
+        this.accountId = UUID.randomUUID().toString();
+    }
 
     public long getAccountNumber() {
         return accountNumber;
@@ -41,14 +48,6 @@ public class Account {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
-    }
-
-    public AccountType getType() {
-        return type;
-    }
-
-    public void setType(AccountType type) {
-        this.type = type;
     }
 
     public User getUser() {
@@ -89,5 +88,16 @@ public class Account {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+    public void addTransaction(Transaction... transaction) {
+        transactions.addAll(Arrays.asList(transaction));
+    }
+    public void addTransaction(double amount, String merchant) {
+        Transaction transaction = new Transaction();
+        transaction.setAccount(this);
+        transaction.setTransactionId(UUID.randomUUID().toString());
+        transaction.setAmount(amount);
+        transaction.setMerchant(merchant);
+        transactions.add(transaction);
     }
 }
