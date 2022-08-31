@@ -3,6 +3,7 @@ package dev.soulcatcher.services;
 import dev.soulcatcher.models.Account;
 import dev.soulcatcher.models.Transaction;
 import dev.soulcatcher.repos.TransactionRepository;
+import dev.soulcatcher.util.Generation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class TransactionService {
     public void addTransaction(double amount, String merchant, Account account) {
         Transaction transaction = new Transaction();
         transaction.setAccount(account);
-        transaction.setTransactionId(UUID.randomUUID().toString());
+        transaction.setTransactionId(Generation.genId());
         transaction.setAmount(amount);
         transaction.setMerchant(merchant);
         account.getTransactions().add(transaction);
