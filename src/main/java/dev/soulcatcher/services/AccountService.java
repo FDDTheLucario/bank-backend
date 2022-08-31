@@ -24,6 +24,7 @@ public class AccountService {
     }
     public void createAccount(NewAccountRequest request) {
         Account account = new Account(request);
+        account.setAccountId(Generation.genId());
         account.setAccountNumber(Generation.generateAccountNumber());
         account.setTransactions(new ArrayList<>());
         account.setCurrentBalance(0);

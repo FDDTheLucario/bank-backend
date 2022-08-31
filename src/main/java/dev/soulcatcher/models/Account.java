@@ -26,7 +26,7 @@ public class Account {
     private double currentBalance;
     @Column(name = "available_balance", precision = 8, scale = 2)
     private double availableBalance;
-    @OneToMany(mappedBy = "account")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
     private List<Transaction> transactions;
 
     public Account() {
