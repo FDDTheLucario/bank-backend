@@ -1,6 +1,7 @@
 package dev.soulcatcher.models;
 
 import dev.soulcatcher.dtos.NewAccountRequest;
+import dev.soulcatcher.util.Generation;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -28,10 +29,13 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<Transaction> transactions;
 
+    public Account() {
+        super();
+    }
     public Account(NewAccountRequest accountRequest) {
         this.user = accountRequest.getUser();
         this.nickname = accountRequest.getNickname();
-        this.accountId = UUID.randomUUID().toString();
+        this.accountId = Generation.genId();
     }
 
     public long getAccountNumber() {

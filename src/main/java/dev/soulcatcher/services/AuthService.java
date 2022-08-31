@@ -1,8 +1,13 @@
 package dev.soulcatcher.services;
 
+import dev.soulcatcher.dtos.AuthResponse;
 import dev.soulcatcher.dtos.RegisterRequest;
+import dev.soulcatcher.exceptions.NotFoundException;
+import dev.soulcatcher.models.Account;
 import dev.soulcatcher.models.User;
 import dev.soulcatcher.repos.UserRepository;
+import dev.soulcatcher.util.Generation;
+import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
@@ -18,10 +23,17 @@ public class AuthService {
         this.userRepo = userRepo;
     }
 
-    public void createUser(RegisterRequest registerRequest) {
+    @SneakyThrows
+    public AuthResponse createUser(RegisterRequest registerRequest) {
         User user = new User(registerRequest);
-        user.setPassword(BCrypt.hashpw(registerRequest.getPassword(), BCrypt.gensalt(10)));
+        registerRequest.setPassword(BCrypt.hashpw(registerRequest.getPassword(), BCrypt.gensalt(10)));
         user.setAccounts(new ArrayList<>());
+        Account account = new Account();
+        account.setUser(user);
+        account.setNickname("Checking");
+        account.setAccountNumber(Generation.generateAccountNumber());
+        user.getAccounts().add(account);
         userRepo.save(user);
+        return userRepo.findById(user.getUserId()).map(AuthResponse::new).orElseThrow(NotFoundException::new);
     }
 }

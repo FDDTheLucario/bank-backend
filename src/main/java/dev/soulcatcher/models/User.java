@@ -1,6 +1,7 @@
 package dev.soulcatcher.models;
 
 import dev.soulcatcher.dtos.RegisterRequest;
+import dev.soulcatcher.util.Generation;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class User {
     }
 
     public User(RegisterRequest registerRequest) {
-        this.userId = UUID.randomUUID().toString();
+        this.userId = Generation.genId();
         this.email = registerRequest.getEmail();
         this.username = registerRequest.getUsername();
         this.firstName = registerRequest.getFirstName();
