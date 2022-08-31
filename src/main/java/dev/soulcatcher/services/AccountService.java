@@ -32,7 +32,6 @@ public class AccountService {
     }
     public void createAccount(NewAccountRequest request) {
         Account account = new Account(request);
-        account.setNickname(request.getNickname());
         account.setAccountNumber(generateAccountNumber());
         account.setTransactions(new ArrayList<>());
         account.setCurrentBalance(0);
@@ -41,7 +40,5 @@ public class AccountService {
         accountRepo.save(account);
         logger.info(String.format("Created new bank account %d for %s.", account.getAccountNumber(), account.getUser().getUsername()));
     }
-    public void updateAccount(Account account) {
 
-    }
 }
