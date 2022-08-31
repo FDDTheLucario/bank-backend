@@ -1,10 +1,15 @@
 package dev.soulcatcher.repos;
 
 import dev.soulcatcher.models.Account;
+import dev.soulcatcher.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface AccountRepository extends JpaRepository<Account, Integer> {
+import java.util.Optional;
 
+@Repository
+public interface AccountRepository extends JpaRepository<Account, String> {
+    @Query
+    Account findByNicknameIgnoreCaseAndUser(String nickname, User user);
 }
