@@ -33,5 +33,4 @@ public class AccountService {
         accountRepo.save(account);
         logger.info(String.format("Created new bank account %d for %s.", account.getAccountNumber(), account.getUser().getUsername()));
     }
-
 }
