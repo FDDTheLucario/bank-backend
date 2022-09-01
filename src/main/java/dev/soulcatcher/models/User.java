@@ -38,6 +38,16 @@ public class User {
         this.lastName = registerRequest.getLastName();
     }
 
+    public User(User user) {
+        this.email = user.getEmail();
+        this.username = user.getUsername();
+        this.userId = user.getUserId();
+        this.password = user.getPassword();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.accounts = user.getAccounts();
+    }
+
     public String getUserId() {
         return userId;
     }

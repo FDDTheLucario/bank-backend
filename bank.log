@@ -4,3 +4,13 @@
 1661991708178:help
 1661991725642:help create-account
 1661991760237:create-account test@test.com Tester McTesterson tester.mctesterson testing123
+1661993289584:create-acchelp
+1661993295275:help
+1661993311766:create-account
+1661993327086:create-account help
+1661993332230:help create-account
+1661993364159:create-account email@test.com Tester McTesterson tester88 testing
+1661993371506:help
+1661993377655:create-transaction
+1661993406777:create-transaction tester88 Checking 69.00 Tester
+1661993433750:clear

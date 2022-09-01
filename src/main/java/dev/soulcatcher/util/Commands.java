@@ -2,13 +2,16 @@ package dev.soulcatcher.util;
 
 import dev.soulcatcher.dtos.RegisterRequest;
 import dev.soulcatcher.exceptions.ConflictException;
+import dev.soulcatcher.exceptions.NotFoundException;
 import dev.soulcatcher.models.Account;
+import dev.soulcatcher.models.User;
 import dev.soulcatcher.repos.AccountRepository;
 import dev.soulcatcher.repos.TransactionRepository;
 import dev.soulcatcher.repos.UserRepository;
 import dev.soulcatcher.services.AccountService;
 import dev.soulcatcher.services.AuthService;
 import dev.soulcatcher.services.TransactionService;
+import dev.soulcatcher.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,17 @@ public class Commands {
     }
     @ShellMethod(value = "Creates a new transaction.")
     public void createTransaction(String username, String accountName, double amount, String merchant) {
+        UserService userService = new UserService(userRepo);
+        TransactionService transService = new TransactionService(transactionRepo, accountRepo);
+        User user;
+        try {
+            user = userService.findByUsername(username);
+            transService.addTransaction(amount, merchant, accountRepo.findByNicknameIgnoreCaseAndUser(accountName, user));
 
+        } catch (NotFoundException e) {
+            System.out.println("User not found.");
+        } catch (Throwable t) {
+            System.out.println("An unknown error occurred.");
+        }
     }
 }
