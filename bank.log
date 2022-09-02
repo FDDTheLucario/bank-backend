@@ -93,3 +93,19 @@
 1662129929098:list-all-transactions test
 1662129933858:help
 1662129939167:list-user-transactions test
+1662130524485:create-account test test test test test
+1662130535446:create-transaction test checking 69 lol
+1662130545303:create-transaction test checking 420 why
+1662130564512:create-transactiom tset checking 13.37 lolwtfbbq
+1662130582989:create-transaction test checking 13.37 lolwtfbbq
+1662130592599:list-user-transactions test
+1662130790898:create-account test test test test test
+1662130793745:create-transaction test checking 69 lol
+1662130795584:create-transaction test checking 13.37 lolwtfbbq
+1662130798088:create-transaction test checking 420 why
+1662130805417:create-transaction test checking 420 "pure faggotry"
+1662130807689:list-user-transactions test
+1662131174183:exit
+1662131194984:create-account test test test test test
+1662131207102:create-account test1 test test test1 test
+1662131392466:test-account-generation 50

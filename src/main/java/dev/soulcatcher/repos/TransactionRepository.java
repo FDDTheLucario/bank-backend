@@ -1,5 +1,6 @@
 package dev.soulcatcher.repos;
 
+import dev.soulcatcher.models.Account;
 import dev.soulcatcher.models.Transaction;
 import dev.soulcatcher.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,5 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, String> {
     @Query
-    List<Transaction> findAllByUser(User user);
+    List<Transaction> findAllByAccount(Account account);
 }

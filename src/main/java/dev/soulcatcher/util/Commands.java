@@ -95,7 +95,6 @@ public class Commands {
     public void listUserTransactions(String username) {
         AsciiTable table = new AsciiTable();
         UserService userService = new UserService(userRepo);
-
         User user;
         try {
             user = userService.findByUsername(username);
@@ -104,7 +103,15 @@ public class Commands {
             return;
         }
         System.out.printf("List of all transactions for %s.\n", username);
-        List<Transaction> transactions = transactionRepo.
+        table.addRow("Account", "Transaction ID", "Amount", "Merchant");
+        List<Account> accounts = accountRepo.findAllByUser(user);
+        for (Account a : accounts) {
+            List<Transaction> transactions = transactionRepo.findAllByAccount(a);
+            for (Transaction t : transactions) {
+                table.addRule();
+                table.addRow(a.getNickname(), t.getTransactionId(), String.format("$%.2f", t.getAmount()), t.getMerchant());
+            }
+        }
         System.out.println(table.render());
     }
 }
