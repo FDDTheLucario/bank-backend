@@ -19,7 +19,7 @@ public class User {
     private String email;
     @Column(nullable = false, unique = true)
     private String password;
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
     private List<Account> accounts;
     @Column(name = "first_name", unique = false)
     private String firstName;

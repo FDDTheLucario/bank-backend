@@ -1,5 +1,6 @@
 package dev.soulcatcher.util;
 
+import de.vandermeer.asciitable.AsciiTable;
 import dev.soulcatcher.dtos.NewAccountRequest;
 import dev.soulcatcher.dtos.RegisterRequest;
 import dev.soulcatcher.exceptions.ConflictException;
@@ -24,6 +25,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
+import java.util.List;
 import java.util.Scanner;
 
 @ShellComponent
@@ -88,5 +90,21 @@ public class Commands {
             return;
         }
         accountService.createAccount(new NewAccountRequest(nickname, user), startingBalance);
+    }
+    @ShellMethod(value = "Lists all available transactions for a user.")
+    public void listUserTransactions(String username) {
+        AsciiTable table = new AsciiTable();
+        UserService userService = new UserService(userRepo);
+
+        User user;
+        try {
+            user = userService.findByUsername(username);
+        } catch (NotFoundException e) {
+            System.out.printf(USER_NOT_FOUND, username);
+            return;
+        }
+        System.out.printf("List of all transactions for %s.\n", username);
+        List<Transaction> transactions = transactionRepo.
+        System.out.println(table.render());
     }
 }

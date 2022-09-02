@@ -62,3 +62,34 @@
 1662082471739:create-transaction wcarter42
 1662082486675:create-transaction wcarter42 checking 69 "greek squad"
 1662082496521:create-transaction wcarter42 checkin 69 "greek squad"
+1662128965286:create-account test test test test test
+1662128974024:list-user-transactions test
+1662128983327:stacktrace
+1662129038071:create-account test test test test test
+1662129040203:list-user-transactions test
+1662129083264:create-account test test test test test
+1662129085758:list-user-transactions test
+1662129094740:create-transaction
+1662129102471:create-transaction test checking 69 tseting
+1662129117389:create-transaction test checking 420 lolwtfbbq
+1662129122593:list-user-transactions test
+1662129354586:create-account test test test test test
+1662129357746:create-transaction test checking 69 tseting
+1662129360064:create-transaction test checking 420 lolwtfbbq
+1662129379531:list-user-transactions test
+1662129420028:help
+1662129431178:create-account test test test test test
+1662129453504:create-transaction test checking 69 testing
+1662129466625:create-transaction test checking 420 lolwtfbbq
+1662129479098:list-user-transactions test
+1662129602009:create-account test test test test test
+1662129615322:create-transaction test checking 69 lol
+1662129636748:create-transaction test checking 420 no
+1662129856981:create-account test test test test esty
+1662129866716:create-transaction
+1662129881124:create-transaction test checking 69 lol
+1662129904609:create-transaction test checking 69 test
+1662129915775:list-all-transaction test
+1662129929098:list-all-transactions test
+1662129933858:help
+1662129939167:list-user-transactions test
