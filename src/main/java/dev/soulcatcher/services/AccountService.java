@@ -1,6 +1,7 @@
 package dev.soulcatcher.services;
 
 import dev.soulcatcher.dtos.NewAccountRequest;
+import dev.soulcatcher.exceptions.NotFoundException;
 import dev.soulcatcher.models.Account;
 import dev.soulcatcher.models.User;
 import dev.soulcatcher.repos.AccountRepository;
@@ -33,5 +34,20 @@ public class AccountService {
         accountRepo.save(account);
         logger.info(String.format("Created new bank account %d for %s.", account.getAccountNumber(), account.getUser().getUsername()));
     }
-
+    public void createAccount(NewAccountRequest request, double startingAmount) {
+        Account account = new Account(request);
+        account.setAccountId(Generation.genId());
+        account.setAccountNumber(Generation.generateAccountNumber());
+        account.setTransactions(new ArrayList<>());
+        account.setCurrentBalance(startingAmount);
+        account.setAvailableBalance(startingAmount);
+        account.setUser(request.getUser());
+        accountRepo.save(account);
+        logger.info(String.format("Created new bank account %d for %s.", account.getAccountNumber(), account.getUser().getUsername()));
+    }
+    public Account findByAccountNameAndUser(String nickname, User user) {
+        return accountRepo.findByNicknameIgnoreCaseAndUser(nickname, user)
+                          .map(Account::new)
+                          .orElseThrow(NotFoundException::new);
+    }
 }

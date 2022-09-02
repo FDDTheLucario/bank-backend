@@ -1,5 +1,4 @@
 debug: false
-run-inserter: true
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver

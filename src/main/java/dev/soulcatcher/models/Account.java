@@ -38,6 +38,16 @@ public class Account {
         this.accountId = Generation.genId();
     }
 
+    public Account(Account account) {
+        this.accountNumber = account.getAccountNumber();
+        this.accountId = account.getAccountId();
+        this.user = account.getUser();
+        this.nickname = account.getNickname();
+        this.currentBalance = account.getCurrentBalance();
+        this.availableBalance = account.getAvailableBalance();
+        this.transactions = account.getTransactions();
+    }
+
     public long getAccountNumber() {
         return accountNumber;
     }

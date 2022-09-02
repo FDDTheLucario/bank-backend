@@ -14,3 +14,51 @@
 1661993377655:create-transaction
 1661993406777:create-transaction tester88 Checking 69.00 Tester
 1661993433750:clear
+1661994078159:create-account
+1661994108061:create-account testing@testing.com Soul Twilight stwilight03 testing
+1661994218944:create-account testing@testing.com
+1661994245195:create-account testing@testing.com Soul Twilight stwilight03 testing123
+1661994261373:add-account Savings 69
+1661994268468:stacktrace
+1661994297770:add-account stwilight03 Savings 69
+1661994346304:create-transaction stwilight03 Savings 13.37 "totally real amazon"
+1661994513725:create-account testing@testing.com Soul Twilight stwilight03 testing123
+1661994530057:add-bank stwilight03 Savings 69
+1661994559124:create-transaction stwilight03 Savings 13.37 "totally real amazon"
+1661994607854:create-account testing@testing.com Soul Twilight stwilight03 tseting
+1661994632575:add-bank stwilight03 Savings 69
+1661994655936:create-transaction stwilight03 Savings 13.37 totally real amazon
+1661994795765:create-account testing@testing.com Soul Twilight stwilight03 testing123
+1661994826786:add-bank stwilight03 Savings 69
+1661994847986:create-transaction stwilight03 Savings 13.37 totally real amazon
+1662055729920:help
+1662055800127:create-account testing@testing.com Soul Twilight stwilight03 testing123
+1662055891499:add-bank stwilight03 Savings 69
+1662055969517:create-transaction stwilight03 savings 13.37 "totally real amazon"
+1662070864675:create-transaction test test 0 gfhjf
+1662072196946:help
+1662072198700:clear
+1662072208855:create-account
+1662072223897:create-account test@test.com test test test test
+1662072228461:ls
+1662072233442:stacktrace
+1662072236360:clear
+1662072239114:help
+1662072247081:create-transaction
+1662072257152:create-transaction test Checking 69 "test"
+1662072478386:create-account test test test test
+1662072483771:create-account test test test test test
+1662072492197:create-transaction
+1662072501954:create-transaction test Checking 69 test
+1662072614641:create-account test test test test test
+1662072620315:create-transaction
+1662072631188:create-transaction test Checkimh 69 test
+1662072635987:create-transaction test Checking 69 test
+1662082278736:help
+1662082285173:stacktrace
+1662082290767:version
+1662082394298:create-account wilison.carter42@juno.com
+1662082414980:create-account wilson.carter42@juno.com Wilson Carter wcarter42 password
+1662082471739:create-transaction wcarter42
+1662082486675:create-transaction wcarter42 checking 69 "greek squad"
+1662082496521:create-transaction wcarter42 checkin 69 "greek squad"

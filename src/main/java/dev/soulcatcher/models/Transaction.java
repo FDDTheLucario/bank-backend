@@ -1,5 +1,7 @@
 package dev.soulcatcher.models;
 
+import dev.soulcatcher.util.Generation;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,16 @@ public class Transaction {
     private double amount;
     private String merchant;
 
+    public Transaction() {
+        super();
+    }
+
+    public Transaction(Account account, double amount, String merchant) {
+        this.transactionId = Generation.genId();
+        this.account = account;
+        this.amount = amount;
+        this.merchant = merchant;
+    }
     public String getTransactionId() {
         return transactionId;
     }

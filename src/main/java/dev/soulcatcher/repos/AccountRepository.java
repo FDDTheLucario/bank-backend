@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
     @Query
-    Account findByNicknameIgnoreCaseAndUser(String nickname, User user);
+    Optional<Account> findByNicknameIgnoreCaseAndUser(String nickname, User user);
 }
