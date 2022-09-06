@@ -19,7 +19,7 @@ public class User {
     private String email;
     @Column(nullable = false, unique = true)
     private String password;
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
     private List<Account> accounts;
     @Column(name = "first_name", unique = false)
     private String firstName;
@@ -36,6 +36,16 @@ public class User {
         this.username = registerRequest.getUsername();
         this.firstName = registerRequest.getFirstName();
         this.lastName = registerRequest.getLastName();
+    }
+
+    public User(User user) {
+        this.email = user.getEmail();
+        this.username = user.getUsername();
+        this.userId = user.getUserId();
+        this.password = user.getPassword();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.accounts = user.getAccounts();
     }
 
     public String getUserId() {

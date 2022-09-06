@@ -9,8 +9,11 @@ public class Generation {
     public static long generateAccountNumber() {
         try {
             SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG", "SUN");
-            long m = (long) Math.pow(10, 17 - 1);
-            return Math.abs(m + (long) secureRandom.nextLong());
+            int m = (int) Math.pow(10, 8);
+            int firstPart = m + secureRandom.nextInt(9 * m);
+            int secondPart = m + secureRandom.nextInt(9 * m);
+            String numberAsString = Integer.toString(firstPart) + Integer.toString(secondPart);
+            return Long.parseLong(numberAsString);
         } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
             throw new RuntimeException(e);
         }

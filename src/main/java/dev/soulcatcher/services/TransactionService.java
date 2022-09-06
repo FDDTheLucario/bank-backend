@@ -21,22 +21,23 @@ public class TransactionService {
         this.transactionRepo = transactionRepo;
         this.accountRepo = accountRepo;
     }
-    public void addTransaction(Account account, Transaction... transaction) {
-        account.getTransactions().addAll(Arrays.asList(transaction));
-        transactionRepo.saveAll(account.getTransactions());
+    public void addTransaction(Transaction... transaction) {
+        for (Transaction t : transaction) {
+            Account account = t.getAccount();
+            double balance = account.getAvailableBalance();
+            account.getTransactions().add(t);
+            transactionRepo.save(t);
+            account.setAvailableBalance(balance - t.getAmount());
+            accountRepo.save(account);
+        }
     }
     public void addTransaction(double amount, String merchant, Account account) {
         Transaction transaction = new Transaction();
         transaction.setAccount(account);
-        double balance = transaction.getAccount().getCurrentBalance();
+        double balance = account.getAvailableBalance();
         transaction.setTransactionId(Generation.genId());
         transaction.setAmount(amount);
         transaction.setMerchant(merchant);
-        Hibernate.initialize(account.getTransactions());
-        account.getTransactions().add(transaction);
-
-        transaction.getAccount().setAvailableBalance(balance - amount);
-        transactionRepo.save(transaction);
-        accountRepo.save(account);
+        addTransaction(transaction);
     }
 }

@@ -5,11 +5,9 @@ import dev.soulcatcher.dtos.NewAccountRequest;
 import dev.soulcatcher.dtos.RegisterRequest;
 import dev.soulcatcher.exceptions.ConflictException;
 import dev.soulcatcher.exceptions.NotFoundException;
-import dev.soulcatcher.models.Account;
 import dev.soulcatcher.models.User;
 import dev.soulcatcher.repos.AccountRepository;
 import dev.soulcatcher.repos.UserRepository;
-import dev.soulcatcher.util.Generation;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +29,7 @@ public class AuthService {
     }
 
     @SneakyThrows
-    public AuthResponse createUser(RegisterRequest registerRequest) {
+    public void createUser(RegisterRequest registerRequest) {
         final AccountService accountService = new AccountService(accountRepo);
         User user = new User(registerRequest);
         if (userRepo.existsByEmailIgnoreCase(registerRequest.getEmail()) || userRepo.existsByUsernameIgnoreCase(registerRequest.getUsername())) {
@@ -42,6 +40,5 @@ public class AuthService {
 
         userRepo.save(user);
         accountService.createAccount(new NewAccountRequest("Checking", user));
-        return userRepo.findById(user.getUserId()).map(AuthResponse::new).orElseThrow(NotFoundException::new);
     }
 }
