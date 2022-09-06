@@ -8,12 +8,13 @@ import java.util.UUID;
 @Table(name = "transfers")
 public class Transfer {
     @Id
+    @Column(name = "transfer_id", unique = true, nullable = false)
     private String transferId;
     @OneToOne(mappedBy = "account_id")
     private Account from;
     @OneToOne(mappedBy = "account_id")
     private Account to;
-    @Column(name = "amount", precision = 8, scale = 2)
+    @Column(name = "amount", precision = 8, scale = 2, nullable = false)
     private double amount;
 
     public Transfer(Account from, Account to, double amount) {
