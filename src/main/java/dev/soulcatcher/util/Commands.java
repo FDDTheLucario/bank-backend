@@ -24,35 +24,43 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Scanner;
 
+
 @ShellComponent
 public class Commands {
-    private final UserRepository userRepo;
     private final String USER_NOT_FOUND = "Could not find any user with the username of %s. Check the spelling and try again.\n";
     private final String ACCOUNT_NOT_FOUND = "Could not find any account with the name of %s. Check the spelling and try again.\n";
-    private final AccountRepository accountRepo;
-    private final TransactionRepository transactionRepo;
+
+
+    private final UserRepository userRepo;
+    private AccountRepository accountRepo;
+    private TransactionRepository transactionRepo;
+    private final UserService userService;
+    private final AccountService accountService;
+    private final TransactionService transService;
+    private final AuthService authService;
 
     public Commands(UserRepository userRepo, AccountRepository accountRepo, TransactionRepository transactionRepo) {
         this.userRepo = userRepo;
         this.accountRepo = accountRepo;
         this.transactionRepo = transactionRepo;
+        userService = new UserService(userRepo);
+        accountService = new AccountService(accountRepo);
+        transService = new TransactionService(transactionRepo, accountRepo);
+        authService = new AuthService(userRepo, accountRepo);
     }
     @ShellMethod(value = "Creates a new account.")
     public void createAccount(String email, String firstName, String lastName, String username, String password) {
-        AuthService authService = new AuthService(userRepo, accountRepo);
         RegisterRequest request = new RegisterRequest(email, username, firstName, lastName, password);
         authService.createUser(request);
         System.out.printf("Created user %s successfully!\n", username);
     }
     @ShellMethod(value = "Creates a new transaction.")
     public void createTransaction(String username, String accountName, double amount, String merchant) {
-        UserService userService = new UserService(userRepo);
-        TransactionService transService = new TransactionService(transactionRepo, accountRepo);
-        AccountService accountService = new AccountService(accountRepo);
         User user;
         try {
             user = userService.findByUsername(username);
@@ -80,8 +88,6 @@ public class Commands {
     }
     @ShellMethod(value = "Adds a banking account to a user.")
     public void addBank(String username, @ShellOption(defaultValue = "Checking") String nickname, @ShellOption(defaultValue = "0.00") double startingBalance) {
-        AccountService accountService = new AccountService(accountRepo);
-        UserService userService = new UserService(userRepo);
         User user;
         try {
             user = userService.findByUsername(username);
@@ -94,7 +100,6 @@ public class Commands {
     @ShellMethod(value = "Lists all available transactions for a user.")
     public void listUserTransactions(String username) {
         AsciiTable table = new AsciiTable();
-        UserService userService = new UserService(userRepo);
         User user;
         try {
             user = userService.findByUsername(username);
@@ -113,5 +118,9 @@ public class Commands {
             }
         }
         System.out.println(table.render());
+    }
+    @ShellMethod(value = "Transfers money between a user's own account.")
+    public void transferMoney(String username, double amount, String fromAccount, String accountTo) {
+        User user;
     }
 }
