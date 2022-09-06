@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 @Service
@@ -39,5 +40,28 @@ public class TransactionService {
         transaction.setAmount(amount);
         transaction.setMerchant(merchant);
         addTransaction(transaction);
+    }
+    public void transferMoney(double amount, Account from, Account to) {
+        double fromBalance = amount - from.getAvailableBalance();
+        double toBalance = amount + to.getAvailableBalance();
+        Transaction transactionFrom = new Transaction();
+        Transaction transactionTo = new Transaction();
+
+        from.setAvailableBalance(fromBalance);
+        to.setAvailableBalance(toBalance);
+
+        transactionFrom.setAmount(fromBalance);
+        transactionTo.setAmount(toBalance);
+        transactionFrom.setAccount(from);
+        transactionTo.setAccount(to);
+
+        String transferText = String.format("Transfer from %s to %s", from.getNickname(), to.getNickname());
+        transactionFrom.setMerchant(transferText);
+        transactionTo.setMerchant(transferText);
+        from.getTransactions().add(transactionFrom);
+        to.getTransactions().add(transactionTo);
+
+        accountRepo.saveAll(Arrays.asList(from, to));
+        transactionRepo.saveAll(Arrays.asList(transactionFrom, transactionTo));
     }
 }
