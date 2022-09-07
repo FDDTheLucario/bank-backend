@@ -50,26 +50,20 @@ public class TransactionService {
             throw new InsufficientFundsException();
         }
         Transaction transactionFrom = new Transaction();
-        Transaction transactionTo = new Transaction();
 
         fromBalance -= amount;
         toBalance += amount;
         from.setCurrentBalance(fromBalance);
         to.setCurrentBalance(toBalance);
 
-        transactionFrom.setAmount(fromBalance);
-        transactionTo.setAmount(toBalance);
+        transactionFrom.setAmount(toBalance);
         transactionFrom.setAccount(from);
-        transactionTo.setAccount(to);
 
         String transferText = String.format("Transfer from %s to %s", from.getNickname(), to.getNickname());
         transactionFrom.setMerchant(transferText);
-        transactionTo.setMerchant(transferText);
         from.getTransactions().add(transactionFrom);
-        to.getTransactions().add(transactionTo);
 
         transactionRepo.save(transactionFrom);
-        transactionRepo.save(transactionTo);
         accountRepo.save(from);
         accountRepo.save(to);
     }
