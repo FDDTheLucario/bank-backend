@@ -1,5 +1,6 @@
 package dev.soulcatcher.services;
 
+import dev.soulcatcher.exceptions.InsufficientFundsException;
 import dev.soulcatcher.models.Account;
 import dev.soulcatcher.models.Transaction;
 import dev.soulcatcher.repos.AccountRepository;
@@ -42,11 +43,18 @@ public class TransactionService {
         addTransaction(transaction);
     }
     public void transferMoney(double amount, Account from, Account to) {
-        double fromBalance = amount - from.getAvailableBalance();
-        double toBalance = amount + to.getAvailableBalance();
+        double fromBalance = from.getAvailableBalance();
+        double toBalance = to.getAvailableBalance();
+        if (amount > from.getAvailableBalance()) {
+            throw new InsufficientFundsException();
+        }
         Transaction transactionFrom = new Transaction();
         Transaction transactionTo = new Transaction();
+        transactionFrom.setTransactionId(Generation.genId());
+        transactionTo.setTransactionId(Generation.genId());
 
+        fromBalance -= amount;
+        toBalance += amount;
         from.setAvailableBalance(fromBalance);
         to.setAvailableBalance(toBalance);
 
@@ -61,7 +69,9 @@ public class TransactionService {
         from.getTransactions().add(transactionFrom);
         to.getTransactions().add(transactionTo);
 
-        accountRepo.saveAll(Arrays.asList(from, to));
-        transactionRepo.saveAll(Arrays.asList(transactionFrom, transactionTo));
+        transactionRepo.save(transactionFrom);
+        transactionRepo.save(transactionTo);
+        accountRepo.save(from);
+        accountRepo.save(to);
     }
 }
