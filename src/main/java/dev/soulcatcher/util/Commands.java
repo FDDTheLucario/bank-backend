@@ -84,7 +84,7 @@ public class Commands {
         }
         Transaction transaction = new Transaction(account, amount, merchant);
         transService.addTransaction(transaction);
-        System.out.printf("Created transaction with value of $%.2f. New account balance: $%.2f.\n", amount, account.getAvailableBalance());
+        System.out.printf("Created transaction with value of $%.2f. New account balance: $%.2f.\n", amount, account.getCurrentBalance());
 
     }
     @ShellMethod(value = "Adds a banking account to a user.")
@@ -98,7 +98,7 @@ public class Commands {
         }
         accountService.createAccount(new NewAccountRequest(nickname, user), startingBalance);
     }
-    @ShellMethod(value = "Lists every user's transacation.")
+    @ShellMethod(value = "Lists every user's transaction.")
     public void listUserTransactions(String username) {
         AsciiTable table = new AsciiTable();
         User user;
@@ -143,11 +143,31 @@ public class Commands {
             transService.transferMoney(amount, from, recipient);
             System.out.printf("Transferred $%.2f from %s to %s successfully.\n", amount, fromAccount, toAccount);
         } catch (InsufficientFundsException e) {
-            System.err.printf(INSUFFICIENT_FUNDS, fromAccount, Math.abs(amount - from.getAvailableBalance()));
+            System.err.printf(INSUFFICIENT_FUNDS, fromAccount, Math.abs(amount - from.getCurrentBalance()));
             return;
         } catch (NotFoundException e) {
             System.out.printf(ACCOUNT_NOT_FOUND, toAccount);
             return;
         }
+    }
+    @ShellMethod("Lists all bank accounts owned by a user.")
+    public void listAccounts(String username) {
+        User user;
+        AsciiTable table = new AsciiTable();
+        try {
+            user = userService.findByUsername(username);
+        } catch (NotFoundException e) {
+            System.err.printf(USER_NOT_FOUND, username);
+            return;
+        }
+        List<Account> accounts = accountRepo.findAllByUser(user);
+        System.out.printf("List of all accounts owned by %s.\n", username);
+
+        table.addRow("Account Name", "Account Number", "Current Balance");
+        for (Account a : accounts) {
+            table.addRule();
+            table.addRow(a.getNickname(), a.getAccountNumber(), String.format("$%.2f", a.getCurrentBalance()));
+        }
+        System.out.println(table.render());
     }
 }

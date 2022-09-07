@@ -24,8 +24,6 @@ public class Account {
     private String nickname;
     @Column(name = "current_balance", precision = 8, scale = 2)
     private double currentBalance;
-    @Column(name = "available_balance", precision = 8, scale = 2)
-    private double availableBalance;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
     private List<Transaction> transactions;
 
@@ -44,7 +42,6 @@ public class Account {
         this.user = account.getUser();
         this.nickname = account.getNickname();
         this.currentBalance = account.getCurrentBalance();
-        this.availableBalance = account.getAvailableBalance();
         this.transactions = account.getTransactions();
     }
 
@@ -88,13 +85,6 @@ public class Account {
         this.currentBalance = currentBalance;
     }
 
-    public double getAvailableBalance() {
-        return availableBalance;
-    }
-
-    public void setAvailableBalance(double availableBalance) {
-        this.availableBalance = availableBalance;
-    }
 
     public List<Transaction> getTransactions() {
         return transactions;

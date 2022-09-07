@@ -29,7 +29,6 @@ public class AccountService {
         account.setAccountNumber(Generation.generateAccountNumber());
         account.setTransactions(new ArrayList<>());
         account.setCurrentBalance(0);
-        account.setAvailableBalance(0);
         account.setUser(request.getUser());
         accountRepo.save(account);
         logger.info(String.format("Created new bank account %d for %s.", account.getAccountNumber(), account.getUser().getUsername()));
@@ -40,7 +39,6 @@ public class AccountService {
         account.setAccountNumber(Generation.generateAccountNumber());
         account.setTransactions(new ArrayList<>());
         account.setCurrentBalance(startingAmount);
-        account.setAvailableBalance(startingAmount);
         account.setUser(request.getUser());
         accountRepo.save(account);
         logger.info(String.format("Created new bank account %d for %s.", account.getAccountNumber(), account.getUser().getUsername()));
