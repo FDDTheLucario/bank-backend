@@ -50,8 +50,6 @@ public class TransactionService {
         }
         Transaction transactionFrom = new Transaction();
         Transaction transactionTo = new Transaction();
-        transactionFrom.setTransactionId(Generation.genId());
-        transactionTo.setTransactionId(Generation.genId());
 
         fromBalance -= amount;
         toBalance += amount;

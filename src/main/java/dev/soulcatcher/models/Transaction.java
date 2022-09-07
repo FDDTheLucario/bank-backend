@@ -17,7 +17,7 @@ public class Transaction {
     private String merchant;
 
     public Transaction() {
-        super();
+        this.transactionId = Generation.genId();
     }
 
     public Transaction(Account account, double amount, String merchant) {
