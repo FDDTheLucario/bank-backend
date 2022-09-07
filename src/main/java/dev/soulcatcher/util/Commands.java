@@ -146,7 +146,7 @@ public class Commands {
             System.err.printf(INSUFFICIENT_FUNDS, fromAccount, Math.abs(amount - from.getCurrentBalance()));
             return;
         } catch (NotFoundException e) {
-            System.out.printf(ACCOUNT_NOT_FOUND, toAccount);
+            System.err.printf(ACCOUNT_NOT_FOUND, toAccount);
             return;
         }
     }
