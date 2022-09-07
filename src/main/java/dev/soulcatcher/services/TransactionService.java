@@ -8,6 +8,7 @@ import dev.soulcatcher.repos.TransactionRepository;
 import dev.soulcatcher.util.Generation;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.shell.standard.ShellMethod;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -26,26 +27,26 @@ public class TransactionService {
     public void addTransaction(Transaction... transaction) {
         for (Transaction t : transaction) {
             Account account = t.getAccount();
-            double balance = account.getAvailableBalance();
+            double balance = account.getCurrentBalance();
             account.getTransactions().add(t);
             transactionRepo.save(t);
-            account.setAvailableBalance(balance - t.getAmount());
+            account.setCurrentBalance(balance - t.getAmount());
             accountRepo.save(account);
         }
     }
     public void addTransaction(double amount, String merchant, Account account) {
         Transaction transaction = new Transaction();
         transaction.setAccount(account);
-        double balance = account.getAvailableBalance();
+        double balance = account.getCurrentBalance();
         transaction.setTransactionId(Generation.genId());
         transaction.setAmount(amount);
         transaction.setMerchant(merchant);
         addTransaction(transaction);
     }
     public void transferMoney(double amount, Account from, Account to) {
-        double fromBalance = from.getAvailableBalance();
-        double toBalance = to.getAvailableBalance();
-        if (amount > from.getAvailableBalance()) {
+        double fromBalance = from.getCurrentBalance();
+        double toBalance = to.getCurrentBalance();
+        if (amount > from.getCurrentBalance()) {
             throw new InsufficientFundsException();
         }
         Transaction transactionFrom = new Transaction();
@@ -53,8 +54,8 @@ public class TransactionService {
 
         fromBalance -= amount;
         toBalance += amount;
-        from.setAvailableBalance(fromBalance);
-        to.setAvailableBalance(toBalance);
+        from.setCurrentBalance(fromBalance);
+        to.setCurrentBalance(toBalance);
 
         transactionFrom.setAmount(fromBalance);
         transactionTo.setAmount(toBalance);
