@@ -10,6 +10,8 @@ spring:
     show-sql: false
     hibernate:
       ddl-auto: create-drop
+secrets:
+  token-secret: "IhFYNwG5abjzyvTo4B6rSSTehUtABjSuBj0MYkharAevqLnEeylYK9GUuwqFNo1cU/0jKgvqS9y/wb7kI+CsuwiAgaSOuNcMJUDg0eobEFWKqknw2J/xSPvl0U9J3cO2HR2RleVREf4BYO6MaCi5A/TL0edTJc0FNtVwNW9HlJXr97qtUYhWyD2qjPm4DKlfc5B9sgaWT4mYZp+cFsmrxRtqFr5a+e7eLYrDVneh06LVOx7ZiXEW0fO0DMIdufLRdc20tyJ/Bh53dOzZPDyX/BEf+swIqBPOSO1sDZ9Rcm355kRQdVC2xO4/4no4uJG/vi0/kyYMY+TS8bUDKsF0BQ=="
 
 
 management:
