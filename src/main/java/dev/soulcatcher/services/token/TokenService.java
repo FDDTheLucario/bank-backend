@@ -1,6 +1,8 @@
 package dev.soulcatcher.services.token;
 
 import dev.soulcatcher.dtos.Principal;
+import dev.soulcatcher.exceptions.UnauthorizedException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,15 @@ public class TokenService {
                 .compact();
     }
     public Principal extractToken(String token) {
-
+        if (token == null || token.isEmpty()) {
+            throw new UnauthorizedException();
+        }
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(jwtConfig.getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return new Principal(claims.get("id", String.class),
+                claims.get("username", String.class));
     }
 }
