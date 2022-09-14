@@ -3,6 +3,7 @@ package dev.soulcatcher.advice;
 import dev.soulcatcher.dtos.ErrorResponse;
 import dev.soulcatcher.exceptions.*;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -47,7 +48,7 @@ public class RestExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(TokenParseException.class)
+    @ExceptionHandler(MalformedJwtException.class)
     public ErrorResponse handleTokenParse(Throwable t) {
         t.printStackTrace();
         List<String> messages = new ArrayList<>();

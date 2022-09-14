@@ -21,4 +21,7 @@ public class Generation {
     public static String genId() {
         return UUID.randomUUID().toString();
     }
+    public static String getLastFour(long input) {
+        return String.valueOf(input).substring(String.valueOf(input).length() - 4);
+    }
 }

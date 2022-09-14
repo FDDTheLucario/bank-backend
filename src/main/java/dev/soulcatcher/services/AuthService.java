@@ -9,6 +9,7 @@ import dev.soulcatcher.exceptions.NotFoundException;
 import dev.soulcatcher.models.User;
 import dev.soulcatcher.repos.AccountRepository;
 import dev.soulcatcher.repos.UserRepository;
+import dev.soulcatcher.services.token.TokenService;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,11 +27,10 @@ public class AuthService {
     private final AccountRepository accountRepo;
     private final Logger logger = LogManager.getLogger();
     final AccountService accountService;
-    @Autowired
     public AuthService(UserRepository userRepo, AccountRepository accountRepo) {
         this.userRepo = userRepo;
         this.accountRepo = accountRepo;
-        this.accountService = new AccountService(accountRepo);
+        this.accountService = new AccountService(accountRepo, null, userRepo);
     }
 
     @SneakyThrows

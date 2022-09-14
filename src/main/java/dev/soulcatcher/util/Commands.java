@@ -16,6 +16,7 @@ import dev.soulcatcher.services.AccountService;
 import dev.soulcatcher.services.AuthService;
 import dev.soulcatcher.services.TransactionService;
 import dev.soulcatcher.services.UserService;
+import dev.soulcatcher.services.token.TokenService;
 import lombok.var;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,14 +44,16 @@ public class Commands {
     private final UserService userService;
     private final AccountService accountService;
     private final TransactionService transService;
+    private final TokenService tokenService;
     private final AuthService authService;
 
-    public Commands(UserRepository userRepo, AccountRepository accountRepo, TransactionRepository transactionRepo) {
+    public Commands(UserRepository userRepo, AccountRepository accountRepo, TransactionRepository transactionRepo, TokenService tokenService) {
+        this.tokenService = tokenService;
         this.userRepo = userRepo;
         this.accountRepo = accountRepo;
         this.transactionRepo = transactionRepo;
         userService = new UserService(userRepo);
-        accountService = new AccountService(accountRepo);
+        accountService = new AccountService(accountRepo, tokenService, userRepo);
         transService = new TransactionService(transactionRepo, accountRepo);
         authService = new AuthService(userRepo, accountRepo);
     }
