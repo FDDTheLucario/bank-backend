@@ -48,7 +48,8 @@ public class AuthService {
     @ResponseStatus(HttpStatus.OK)
     public AuthResponse login(LoginRequest loginRequest) {
         User u = userRepo.findByUsernameIgnoreCase(loginRequest.getUsername()).get();
-        return userRepo.findByUsernameIgnoreCaseAndPassword(loginRequest.getUsername(), u.getPassword())
+        String password = BCrypt.checkpw(loginRequest.getPassword(), u.getPassword()) ? u.getPassword() : null;
+        return userRepo.findByUsernameIgnoreCaseAndPassword(loginRequest.getUsername(), password)
                 .map(AuthResponse::new)
                 .orElseThrow(NotFoundException::new);
     }
