@@ -71,7 +71,7 @@ public class AccountService {
         Principal principal = tokenService.extractToken(token);
         User user = userRepo.findByUsernameIgnoreCase(principal.getUsername()).orElseThrow(NotFoundException::new);
         Account account = accountRepo.findById(accountId).orElseThrow(NotFoundException::new);
-        if (!user.getUserId().equals(principal.getAuthUserId())) {
+        if (!account.getUser().getUserId().equals(principal.getAuthUserId())) {
             throw new UnauthorizedException();
         }
         return new DetailedAccountResponse(account);
